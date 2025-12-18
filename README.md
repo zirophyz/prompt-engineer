@@ -10,7 +10,7 @@ This project hosts the core persona and configuration for your **Prompt Engineer
 
 1.  **Navigate:** Change your current directory to this project's root:
     ```bash
-    cd /home/brendan/projects/prompt-engineer
+    cd /path/to/projects/prompt-engineer
     ```
 2.  **Start Gemini:** Run your Gemini CLI instance from this directory.
 
