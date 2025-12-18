@@ -1,0 +1,50 @@
+# --- Instructions for Gemini Prompt Engineer ---
+# This file is a template for adding or updating an MCP domain in the system.
+# When you process this file:
+# 1. Parse the YAML content below.
+# 2. Read the existing 'mcp_config_index.json' file.
+# 3. Check if a domain with the 'domain_name' from this file already exists in the index.
+#
+# 4. If the domain does NOT exist:
+#    a. Add the new domain to the 'domains' object.
+#    b. Generate keywords based on the description.
+#    c. Inform the user that a new domain was successfully added.
+#
+# 5. If the domain EXISTS:
+#    a. For each server in this template's 'mcp_servers', check if a server with the same ID already exists in the index for that domain.
+#    b. If a server ID conflict is found (e.g., 'server_id_1' already exists):
+#       i. STOP and ask the user for clarification: "A server with the ID 'server_id_1' already exists for the '[domain_name]' domain. Do you want to overwrite it with this new configuration?"
+#       ii. If the user denies, stop the process for that server and continue to the next. If they approve, replace the existing server config with the new one.
+#    c. For any new server IDs in this template, APPEND them to the existing domain's 'mcp_servers' object.
+#    d. Update the domain's 'description' with the one from this file.
+#    e. Generate a fresh list of keywords based on the new, updated description.
+#    f. Inform the user that the existing domain was successfully updated.
+#
+# 6. Write the final, updated content back to 'mcp_config_index.json'.
+# ---------------------------------------------
+
+# The unique, single-word name for this domain (e.g., "database", "git", "vector_db").
+# If this name already exists in the index, its entry will be updated according to the logic above.
+domain_name: your_new_domain_name
+
+# A clear, concise description of what this domain is for and what its tools do.
+# This description will be used to automatically generate the keywords.
+description: |
+  A multi-line description is perfectly fine.
+  Be descriptive enough for an AI to understand the domain's purpose.
+  For example: "Provides tools for interacting with and managing PostgreSQL databases, including querying, migrations, and user management."
+
+# A dictionary of the MCP servers this domain provides.
+# The keys ("server_id_1") are the unique identifiers for each server within this domain.
+# If a server ID is new for an existing domain, it will be added.
+# If a server ID already exists, you will be asked whether to overwrite it.
+mcp_servers:
+  server_id_1:
+    type: stdio
+    command: npx
+    args:
+      - your-mcp-server-package
+      - --stdio
+  server_id_2:
+    type: sse
+    url: http://localhost:8080/mcp-endpoint
